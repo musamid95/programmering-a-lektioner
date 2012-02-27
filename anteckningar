@@ -36,6 +36,94 @@ JavaScript av **ECMA** (European Computer Manufacturers Association)
 
 Därav namnet ECMAScript.
 
+
+## JavaScript kontra DOM och BOM ##
+
+[JavaScript körs i en **värdmiljö**](https://developer.mozilla.org./en/JavaScript_technologies_overview)
+vanligtvis en webbläsare
+
+För att man ska kunna göra något, så erbjuder värden gränssitt = **api** = application program interface.
+
+De delar av värdmiljön som direkt relaterar till webbläsaren som sådan kallas BOM = Browser Object Model
+
+De delar av värdmiljön som direkt relaterar till dokumentet som visas _i_ webbläsaren kallas DOM = Document Object Model
+
+Exempel - detta är DOM och BOM:
+
+	document.getElementById("foo")  // Hitta elementet med id = foo
+
+	window.setInterval(foo, 100)    // kör functionen foo var 100:e millisekund
+
+	window.location.href            // Adressen till sidan där man är ,kan va bta till att koda i olika adress
+
+	elem.addEventListener()        // Lägg till en händelselyssnare
+
+Detta är en "ren" JavaScript:
+
+	var foo = 53;
+	var elev = { namn: "Kalle", klass: "9c" };
+
+## DOM som det stora problemet ##
+
+NN 3.0 som _de facto_ standard kallas DOM 0 ("noll") och innehåller flera saker som aldrig, eller helt nyligen, blivit officiell standard.
+
+Dit hör **händelsehanterare** (event handlers)
+
+	element.oneclick = function;  (variabeln borde inte heta function, redan upptagen)
+
+Den officella standarden har något kraftfullare: **lyssnare** (event listners), men fram till och med MSIE 8, så stöddes de inte av just MSIE:
+
+	elem,addEventlistner("click", fn, false) //Standard: Firefox, Opera, Safari, Chrome + MSIE 9+
+	elem.attachEvent("oneclick", fn)   // Icke-standard: MSIE 4-8
+
+
+## Hur hantera detta ##
+
+### Dålig lösning: Browsersniffa ###
+
+	if ( navigator.appName.indexOf() ) {}
+	if ( document.layers ) {}
+
+### Tre bättre lösningar ###
+
+1. Kapacitetsdetektera (object detection, capabilty detection)
+2. Använd ett biblotek, typ [JQuery](http://jquery.com/).
+3.Ignorera alla gamla webbläsare
+
+Den sista "lösningen" använder vi på den här kursen. Vi lär oss för framtiden! (Den kan inte användas om en kund vill ha en produkt idag.)
+
+## Ajax ##
+
+somliga webbplatser kan uppdatera en **del** av sidan med ny information som skickats från servern.
+
+
+## God praxis ##
+
+**DHTML** - JavaScript på 90-talet bidrog till att göra webben sämre.
+
+1. HTML styr upp **innehåll**
+2. CSS styr upp **utseende**
+3. DOM och JavaScript styr upp **beteende**
+
+	<body onload="foo()"> dvs. HTML och JavaScript blandas document.write()
+	eval()
+	<script language="javascript"> Attributet language är föråldrat och icke-standard.
+
+### Exempel på dålig information ###
+
+För att gömma JavaScript för webbläsare som finns på marknaden före 1996 så användes följande knep:
+
+	<script>
+	<!--
+	// JS kod här dold inom HTML-kommentarer
+	-->
+	</script>
+
+Det finns fortfarande artiklar och instruktionsfilmer på Youtube som 15 år senare säger att du *måste* använda detta knep!
+
+
+
+
 ## Versioner ##
 
 Netscape, sedan Mozilla, har alltid varit drivande i utvecklingen och skapat _de facto_
